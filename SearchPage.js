@@ -1,7 +1,8 @@
 'use strict';
 
 
-var SecureView = require("./SecureView");
+var option1 = require("./option1");
+var option2 = require("./option2");
 var React = require('react-native');
 var {
   AppRegistry,
@@ -118,6 +119,22 @@ row:
 
 
   },
+  row2: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 20,
+    height: 45,
+    width: 350,
+  borderColor: 'black',
+  borderWidth: 0.5,
+  borderRadius: 8,
+  justifyContent: 'flex-end',
+  flexWrap:'wrap',
+  marginTop: 15
+
+
+  },
   rowTitle: {
     flex: 1,
     fontSize: 12,
@@ -125,11 +142,27 @@ row:
     alignItems: 'center'
     //fontWeight: 'bold',
   },
+  rowTitle1: {
+    flex: 1,
+    fontSize: 12,
+    textAlign: 'center',
+    color: '#48BBEC',
+    justifyContent:'flex-end',
+    flexWrap:'wrap',
+    alignItems: 'center'
+
+    //fontWeight: 'bold',
+  },
 buttonText: {
   fontSize: 18,
   color: 'white',
   alignSelf: 'center'
 },
+subheading1: {
+  marginTop:15,
+        color: "#cccccc",
+        fontSize: 10
+    },
 button: {
   height: 40,
   flex: 2,
@@ -155,7 +188,7 @@ button1: {
   marginBottom: 10,
   alignSelf: 'stretch',
   justifyContent: 'center',
-  marginTop: 10
+  marginTop: 30
 },
 searchInput: {
   height: 36,
@@ -195,7 +228,7 @@ searchInput3: {
   height: 40,
   //width: 50,
   padding: 4,
-  //marginRight: 5,
+  marginRight: 10,
   flex: 4,
   fontSize: 14,
   borderWidth: 1,
@@ -218,6 +251,7 @@ var searchpage = React.createClass ( {
       modalVisible: false,
       transparent: false,
       cost:0,
+      tc: false,
       
     };
   },
@@ -239,19 +273,20 @@ var searchpage = React.createClass ( {
   },
 
 
-onSubmitPressed() {
-        this.props.navigator.push({
-            title: "Secure Page",
-            component: SecureView,
-            passProps: {username: this.state.username, password: this.state.password},
-        });
-    },
+
 
     onSubmitPressed1() {
         this.props.navigator.push({
-            title: "Secure Page",
-            component: SecureView,
-            passProps: {username: this.state.username, password: this.state.password},
+            title: " Paid the post office or a courier service",
+            component: option1,
+            //passProps: {username: this.state.username, password: this.state.password},
+        });
+    },
+    onSubmitPressed2() {
+        this.props.navigator.push({
+            title: "Shipping cost was deducted from return",
+            component: option2,
+            //passProps: {username: this.state.username, password: this.state.password},
         });
     },
 
@@ -289,12 +324,13 @@ onSubmitPressed() {
           <Text style={styles.rowTitle}>I paid the post office or a courier service.</Text>
           
         </View>
-
         <View style={styles.row1}>
-        <SwitchIOS value={this.state.transparent} onValueChange={(this.onSubmitPressed.bind(this))} />
+         <SwitchIOS value={this.state.transparent} onValueChange={(this.onSubmitPressed2.bind(this))} />
           <Text style={styles.rowTitle}>The shipping cost was deducted from my return.</Text>
           
         </View>
+
+        
 
         <View style={styles.flowRight}>
   <TextInput
@@ -303,13 +339,21 @@ onSubmitPressed() {
     placeholder='Return Shipping Cost'/>
 
     <TextInput
-    style={styles.button}
-    placeholder='USD'/>
-    <TextInput
     style={styles.searchInput2}
     placeholder='Date of Return'/>
 
 </View>
+
+<View style={styles.row2}>
+<SwitchIOS value={this.state.tc}  />
+       
+          <Text style={styles.rowTitle}>I have read and agree to the Terms and Conditions.</Text>
+
+         
+
+          
+        </View>
+
 
 
         
@@ -318,6 +362,12 @@ onSubmitPressed() {
     underlayColor='#99d9f4'>
   <Text style={styles.buttonText}>SUBMIT</Text>
 </TouchableHighlight>
+
+ <Text style={styles.subheading1}>
+                
+Please upload the shipping receipt that shows the amount you paid. You can skip this step if your shipment address photo (see above) shows the amount.
+
+                </Text>
 
       </View>
     );
